@@ -54,10 +54,14 @@ https://github.com/TranPhuong3289/FINAL-PROJECT-AI.git
 
 
 MÃ QR CODE CHO VIDEO
+
+
 ![image](https://user-images.githubusercontent.com/105923496/175115973-c81327c9-9ab6-4820-891b-9b95e81ef00a.png)
 
 
 MÃ QR CODE CHO DATASETS ĐÃ DÙNG
+
+
 ![image](https://user-images.githubusercontent.com/105923496/175116093-1cd2ce44-7644-466f-a47e-c64a75a21bdb.png)
 
 
