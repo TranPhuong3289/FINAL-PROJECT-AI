@@ -1,5 +1,7 @@
 # FINAL-PROJECT-AI
 THIS IS MY FINAL-PROJECT AI 
+
+===================================================================================
 ĐỀ TÀI: CHẨN ĐOÁN BỆNH VIÊM PHỔI, UNG THƯ PHỔI SỬ DỤNG THUẬT TOÁN CNN, KẾT HỢP WEBSITE ĐƯA RA KẾT QUẢ
 
 Họ và tên				: Trần Hoàng Bảo Phương
