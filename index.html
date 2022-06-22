@@ -1,0 +1,366 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+    head {
+        overflow: scroll
+    }
+    </style>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" /> -->
+    <!-- Required meta tags -->
+    <!-- <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+
+    <!-- Bootstrap CSS -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Deteksi COVID-19 dan Pneumonia</title>
+</head>
+
+<body>
+    <section class="
+                flex
+                justify-center
+                items-center
+                w-screen
+                h-screen
+                bg-blue-200
+                overflow: scroll
+            ">
+        <main class="
+                    flex flex-col
+                    justify-center
+                    items-center
+                    p-16
+                    bg-white
+                    rounded-lg
+                ">
+            <h1 class="text-3xl text-bold">Deteksi Penyakit COVID-19 dan Pneumonia</h1>
+            <h1 class="text-2xl text-bold">oleh Nindya Eka Apsari</h1>
+
+            {% if uploaded_image %}
+            <div class="row">
+                <div class="column">
+                    <p class="mb-1">Citra Asli</p>
+                    <img src="{{ url_for('send_uploaded_image', filename=uploaded_image)  }}" alt="input" class="mt-8 mb-4 h-48 border-8 border-gray-200 rounded-md">
+                </div>
+                <div class="column">
+                    <p class="mb-1">Citra Heatmap</p>
+                    <img src="./static/images/cam_path.png" alt="heatmap" class="mt-8 mb-4 h-48 border-8 border-gray-200 rounded-md">
+                </div>
+            </div>
+            <img src="./static/images/pieplot.png" width = "350"/>
+            {% else %}
+            <div class="
+                        flex
+                        justify-center
+                        items-center
+                        my-8
+                        w-48
+                        h-48
+                        border-8 border-gray-200
+                        rounded-md
+                    ">
+                <p class="text-center">
+                    Masukkan Citra Rontgen Dada Anda
+                </p>
+            </div>
+            {% endif %} {% if prediction %}
+            <p class="mb-8">Hasil Deteksi Citra Rontgen Dada : {{prediction}}</p>
+            {% endif %}
+            <form method="post" enctype="multipart/form-data" class="flex flex-col">
+                <input type="file" name="image" class="
+                            mb-4
+                            p-4
+                            border-8 border-gray-200
+                            rounded-md
+                            bg-gray-100
+                        " />
+                <button type="submit" class="p-4 bg-blue-600 text-white rounded-md">
+                    Deteksi
+                </button>
+            </form>
+        </main>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+</body>
+
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pneumonia, Lung cancer Predict</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        figure {
+          border: 1px #cccccc solid;
+          padding: 4px;
+          margin: auto;
+        }
+        
+        figcaption {
+          background-color: black;
+          color: white;
+          font-style: italic;
+          padding: 2px;
+          text-align: center;
+        }
+        </style>
+</head>
+<body>
+    <!-- topbar -->
+    <div class="topbar">
+    <H1>HỆ THỐNG CHẨN ĐOÁN CÁC BỆNH LIÊN QUAN ĐẾN PHỔI BẰNG ẢNH X-RAYS</H1>
+    <nav class="navbar navbar-expand-lg navbar-light">                                    
+    </nav>
+    </div>
+    <header id="nav" class="br-10">
+        <div class="flex">
+            <li>
+                <a type="button" data-tab-target="#home" class="homeBtn" href="#" title="home"><strong>HOME</strong></a>
+            </li>
+            <li>
+                <a type="button" data-tab-target="#about" class="aboutBtn" href="#" title="about"><strong>ABOUT</strong></a>
+            </li>
+            <li>
+                <a type="button" data-tab-target="#information" class="infoBtn" href="#" title="information"><strong>INFORMATION</strong></a>
+            </li>
+        </div>
+    </header>
+
+    <div class="tab-content">
+        <div class="bg-img">
+
+        </div>
+        <div id="home" class="home active" data-tab-content>
+            <fieldset class="form pd-16 br-10 w-100">
+                <h4>Your Information</h4>
+                <div class="flex">
+                    <div class="col">
+                        <div class="form-group block">
+                            <div class="label">
+                                <label for="username"><strong><i class="fa-solid fa-user"></i>Name: </strong></label>
+                            </div>
+                            <input class="w-80" type="text" placeholder="Your name here" name="username" id="username" required onkeyup="document.getElementById('get-name').innerText = this.value">
+                        </div>
+                        <div class="form-group block">
+                            <div class="label">
+                                <label for="age"><strong><i class="fa-solid fa-user-gear"></i>Age: </strong></label>
+                            </div>
+                            <input class="w-80" type="number" placeholder="Your age here" name="age" id="age" onkeyup="document.getElementById('get-age').innerText = this.value">
+                        </div>
+                        <div class="form-group block">
+                            <div class="label">
+                                <label for="gender"><strong><i class="fa-solid fa-mars-and-venus"></i>Gender: </strong></label>
+                            </div>
+                            <div class="flex w-80">
+                                <div class="input">
+                                    <input type="radio" name="gender" id="gender1" value="Male"><label class="mt-7 f-17" for="gender1">&nbsp;Male</label>
+                                </div>
+                                <div class="input">
+                                    <input type="radio" name="gender" id="gender2" value="Female"><label class="mt-7 f-17" for="gender2">&nbsp;Female</label>
+                                </div>
+                                <div class="input">
+                                    <input type="radio" name="gender" id="gender3" value="Other"><label class="mt-7 f-17" for="gender3">&nbsp;Other</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" style="display: flex;">
+                            <div class="label" style="width: 44%">
+                                <label for="date"><strong><i class="fa-solid fa-calendar"></i>Date:</strong></label>
+                            </div>
+                            <div class="input col">
+                                <input type="date" name="date" id="date">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="check col">
+                        <h3>Upload your X-ray photo here</h3>
+                        <div class="upload br-10">
+                            <input class="btn" type="file" id="sortpicture" name="sortpic" onchange="chooseFile(this)"
+                               accept="image/gif, image/jpeg, image/jpg, image/png">
+                            <div class="flex">
+                                <button class="br-10" id="upload">PREDICT</button>
+                                <button class="br-10" onclick="window.location.reload();">RESET</button>
+                            </div>    
+        
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        
+            <div id="response" class="bill pd-16 text-white br-10">
+                <header>
+                    <div style="clear: both;"></div>
+                    <h2 class="text-center">PREDICTION</h1>
+                </header>
+                <main>
+                    <div class="header">
+                        <p>Name: <span id="get-name"></span></p>
+                        <p>Age: <span id="get-age"></span></p>
+                        <p>Today: <span id="get-date"></span></p>
+                    </div>
+                    <div class="main">
+                        <table class="w-100">
+                            <thead style="background: #2F71C1; color: #fff">
+                                <tr>
+                                    <th class="col">Your X-ray Photo</th>
+                                    <th class="col">Your Result</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="br text-center">
+                                        <div class="upload-image">
+                                            <img src="" alt="" id="image" width="128" height="128" >
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="text">
+                                            <span id="check"></span>
+                                            <span id="desc"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </main>
+            </div>
+        </div>
+    
+        <div id="about" class="br-10 pd-16 about" data-tab-content>
+            
+                <fieldset class="form pd-16 br-10 w-10">
+                    <p>HÌNH ẢNH UNG THƯ PHỔI</p>
+                    <img src="C:\Users\ADMIN\Downloads\FinalProject5-main\Model_Deployment\templates\download (1).jpg">
+                    <img src="C:\Users\ADMIN\Downloads\FinalProject5-main\Model_Deployment\templates\dataset-cover.jpeg">   
+                    <img class="br-10" src="C:\Users\ADMIN\Downloads\FinalProject5-main\Model_Deployment\templates\download (3).jpg" alt="Lung cancer">
+                    <img src="C:\Users\ADMIN\Downloads\FinalProject5-main\Model_Deployment\templates\pngwing.com (1).png">
+                    </fieldset>
+        </div>
+    
+        <div id="information" class="br-10 pd-16 information" data-tab-content>
+            <img src="C:\Users\ADMIN\Downloads\FinalProject5-main\Model_Deployment\templates\download (1).jpg">
+            <img src="C:\Users\ADMIN\Downloads\FinalProject5-main\Model_Deployment\templates\download (4).jpg">
+            <img src="C:\Users\ADMIN\Downloads\FinalProject5-main\Model_Deployment\templates\illustration-lung-3.5.jpg">
+            <img src=" C:\Users\ADMIN\Downloads\FinalProject5-main\Model_Deployment\templates\pngwing.com (2).png">
+           
+
+
+            <div class="image">
+               
+            </div>
+            <h5>Giới thiệu:</h5>
+            <p>Ung thư phổi (tiếng Anh là Lung Cancer) là loại ung thư khởi phát từ phổi hay còn được gọi là khối u ác tính ở đường hô hấp.  Bệnh xảy ra khi một khối u ác tính hình thành trong phổi, phát triển nhanh về kích cỡ dẫn tới xâm lấn, chèn ép các cơ quan xung quanh. Hai lá phổi trong lồng ngực có chức năng hấp thụ oxy khi hít vào và thải carbon dioxide (CO2) khi thở ra. Bệnh ung thư phổi (u phổi ác tính – Malignant Lung Tumor) – tiếng Anh là Lung Cancer, Lung Carcinoma là căn bệnh nguy hiểm hàng đầu trên thế giới với hơn 2 triệu người mắc mới và hơn 1 triệu người tử vong mỗi năm. Tại Việt Nam, trong số các bệnh nhân nhập viện, có đến 62,5% không còn khả năng phẫu thuật.</p>
+                <h5>Bốn giai đoạn của ung thư phổi không tế bào nhỏ gồm:</h5>
+            <p>
+                   
+
+<li><P>Giai đoạn 1: Tế bào ung thư được tìm thấy trong phổi, nhưng chúng chưa lan ra ngoài phạm vi này;</P></li>
+<li><P>Giai đoạn 2: Tế bào xuất hiện ở phổi và các hạch bạch huyết lân cận;</P></li>
+<li><P>Giai đoạn 3: Tế bào được tìm thấy trong phổi và các hạch bạch huyết ở giữa ngực:</P></li>
+<li><P>Giai đoạn 3A: Tế bào ung thư có trong các hạch bạch huyết, nhưng chỉ ở cùng bên ngực nơi những tế bào ác tính đầu tiên xuất hiện;</P></li>
+<li><P>Giai đoạn 3B: Ung thư lan sang các hạch bạch huyết ở bên ngực đối diện, hoặc đến các hạch bạch huyết trên xương đòn;</P></li>
+<li><P>Giai đoạn 4: Ung thư giai đoạn cuối lan rộng cả hai phổi, sang khu vực xung quanh vị trí này hoặc đến các cơ quan ở xa.</P></li>
+
+                </p>
+               
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+
+
+
+    <!-- Active tabs -->
+    <script>
+        const tabs = document.querySelectorAll('[data-tab-target]');
+        const tabContents = document.querySelectorAll('[data-tab-content]');
+
+        tabs.forEach(tab =>{
+            tab.addEventListener('click',()=>{
+                const target = document.querySelector(tab.dataset.tabTarget)
+                tabContents.forEach(tabContent =>{
+                    tabContent.classList.remove('active')
+                })
+                target.classList.add('active')
+            })
+        })
+    </script>
+
+    <script>
+        let y = new Date();
+        let m = new Date();
+        let d = new Date();
+
+        let year = y.getFullYear();
+        let month = m.getMonth() + 1;
+        let day = d.getDate();
+
+        document.getElementById("get-date").innerHTML = day + "/" + month + "/" + year;
+    </script>
+
+
+    <!-- Display images -->
+    <script>
+        function chooseFile(fileInput){
+            if(fileInput.files && fileInput.files[0]){
+                var reader = new FileReader();
+                reader.onload = function(e){
+                    $('#image').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+    </script>
+    
+
+    <!-- Display Bill -->
+    <script>
+        $("#upload").on('click',function(){
+            const billModal = document.querySelector(".bill");
+            billModal.classList.add('open');
+
+            var file_data = $("#sortpicture").prop("files")[0];
+            var form_data = new FormData();
+            form_data.append("file", file_data);
+    
+            $.ajax({
+                url: 'http://127.0.0.1:8000/upload',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: form_data,
+                type: 'post',
+                success: function(api_resp){
+                    document.getElementById("check").innerHTML = api_resp;
+                    // if(api_resp == 'None Demented'){
+                    //     document.getElementById("desc").innerText = "Congrats!";
+                    // }
+                    // else if(api_resp == 'Moderate Demented'){
+                    //     document.getElementById("desc").innerText = "Sorry!"
+                    // }
+                },
+                error: function(err){
+                    alert(err.responseText);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
